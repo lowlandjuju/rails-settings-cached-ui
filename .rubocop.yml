@@ -1,0 +1,112 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  CacheRootDirectory: .
+  DisabledByDefault: true
+  Exclude:
+    - '**/bin/*'
+    - '**/db/migrate/*'
+    - '**/db/schema.rb'
+    - '**/vendor/**/*' # since we `bundle install --path vendor/bundle` on CI
+    - '**/node_modules/**/*' # since we `bundle install --path vendor/bundle` on CI
+
+Capybara:
+  Enabled: true
+
+FactoryBot:
+  Enabled: true
+
+Layout:
+  Enabled: true
+
+Layout/EndOfLine:
+  Enabled: false
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Lint:
+  Enabled: true
+
+Lint/AmbiguousBlockAssociation:
+  # Exclude specs because rspec is deliberatly using
+  # a special kind of block styling
+  Exclude:
+    - "**/spec/**/*"
+
+Lint/AssignmentInCondition:
+  # If you want to assign in the conditional
+  # then the condition must be surrounded with ()
+  AllowSafeAssignment: true
+
+Lint/SuppressedException:
+  Enabled: false
+
+Performance:
+  Enabled: true
+
+# Note: Disabled because changing String#downcase & #== to #casecmp is breaking unicode-safe string comparison.
+Performance/Casecmp:
+  Enabled: false
+
+Style/AndOr:
+  # && / || instead of and / or
+  Enabled: true
+
+Style/ArrayJoin:
+  # use join instead of *
+  Enabled: true
+
+Style/DoubleNegation:
+  # Don't use cryptic !! syntax for checking not nil
+  Enabled: true
+
+Style/MutableConstant:
+  # Have to freeze potentially mutable constants
+  Enabled: true
+
+Style/Not:
+  # !x instead of (not x)
+  Enabled: true
+
+Naming/ClassAndModuleCamelCase:
+  Enabled: true
+
+Naming/ConstantName:
+  # SCREAMING_SNAKE_CASE
+  Enabled: true
+
+Naming/FileName:
+  Enabled: true
+
+Naming/MethodName:
+  Enabled: true
+
+Naming/VariableName:
+  Enabled: true
+
+RSpec:
+  Enabled: true
+
+RSpec/EmptyLineAfterSubject:
+  Exclude:
+    - '**/spec/factories/*.rb'
+
+Rails:
+  Enabled: true
+
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_sql
+    - find_by_phone
+    - find_by_external_id
+    - find_by_name
+
+Rails/SaveBang:
+  AllowedReceivers:
+    - Stripe::Charge

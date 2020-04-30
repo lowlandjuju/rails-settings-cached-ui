@@ -1,0 +1,10 @@
+<%= javascript_pack_tag 'dashboard' %>
+<%= content_tag :div,
+                id: "sui-dashboard",
+                data: {
+                  message: 'Click me!',
+                  logged_in_user: current_account,
+                  settings: @settings
+                }.to_json do %>
+<% end %>
+
