@@ -6,38 +6,51 @@ import * as React from 'react'
 import ReactDOM from 'react-dom'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import Container from '@material-ui/core/Container'
+import SettingsSection from 'packs/components/SettingsSection'
 
 interface Props {
   logged_in_user: object
   settings: object
+  schema: object
 }
 
-const Dashboard: React.FC<Props> = ({ logged_in_user, settings }) => {
+const Dashboard: React.FC<Props> = ({ logged_in_user, settings, schema }) => {
   return (
-    <div>
-      <Grid container spacing={3} direction="column">
-        <Grid item xs={12}>
-          <Typography variant="h4">Settings UI</Typography>
+    <Container maxWidth="sm" style={{ paddingTop: 30 }}>
+      <Grid container spacing={1} direction="column" alignContent="center">
+        <Grid item xs={12} style={{ width: '100%' }}>
+          <Paper elevation={3} style={{ mixBlendMode: 'screen', padding: 10 }}>
+            <Typography
+              variant="h4"
+              style={{ fontWeight: 900, textAlign: 'center' }}
+            >
+              Settings UI
+            </Typography>
+          </Paper>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          {logged_in_user && (
-            <div>
-              Hello {logged_in_user['first_name']} ({logged_in_user['email']})!
-            </div>
-          )}
-          {Object.entries(settings).map((setting) => (
-            <div>
-              <h3>Setting group: {setting[0]}</h3>
-              {Object.entries(setting[1]).map((value) => (
-                <p>
-                  {value[0]} => {value[1]}
-                </p>
-              ))}
-            </div>
-          ))}
+        <Grid item xs={12} style={{ width: '100%' }}>
+          <Paper elevation={3} style={{ padding: 20 }}>
+            {logged_in_user && (
+              <div>
+                Hello {logged_in_user['first_name']} ({logged_in_user['email']}
+                )!
+              </div>
+            )}
+            {Object.entries(settings).map((entry) => (
+              // @ts-ignore
+              <SettingsSection
+                name={entry[0]}
+                section={entry[1]}
+                schema={schema[entry[0]]}
+                key={entry[0]}
+              />
+            ))}
+          </Paper>
         </Grid>
       </Grid>
-    </div>
+    </Container>
   )
 }
 
