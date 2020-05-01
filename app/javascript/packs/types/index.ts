@@ -2,8 +2,12 @@ export interface Application {
   name: string
 }
 
-export interface SettingsSection {
+export interface Setting {
   [propName: string]: any
+}
+
+export interface SettingsSection {
+  [propName: string]: Setting
 }
 
 export interface Settings {
@@ -17,7 +21,8 @@ export interface SchemaSection {
 export interface SchemaItem {
   type: string
   label: string
-  description: string
+  description: string | null
+  link: string | null
 }
 
 export interface Schema {

@@ -12,7 +12,8 @@ module SettingsUi
   #     live_updates: {
   #       type: :boolean,
   #       label: 'Live Updates',
-  #       description: 'Animated icons display in the background in response to mailings and action'
+  #       description: 'Animated icons display in the background in response to mailings and action',
+  #       link: 'https://github.com/the-open/identity/blob/master/docs/developers/CHANGELOG.md'
   #     }
   #   }
   # }

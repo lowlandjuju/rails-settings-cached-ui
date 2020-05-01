@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import SettingBooleanFunc from 'packs/components/SettingBoolean'
+import SettingBase from 'packs/components/SettingBase'
 import * as types from 'packs/types'
 
 interface Props {
@@ -11,29 +11,32 @@ interface Props {
   key: string
 }
 const SettingsSection = ({ name, settingsSection, schemaSection }: Props) => {
-  return Object.entries(settingsSection).map((settingItem) => {
-    const settingType = schemaSection[settingItem[0]].type
-    switch (settingType) {
-      case 'boolean':
-        return (
-          <Grid container spacing={0} direction="column" key={name}>
-            <Grid item xs={12}>
-              <Typography variant="h5">
-                {schemaSection.section_label}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <SettingBooleanFunc
-                label={schemaSection[settingItem[0]].label}
-                value={settingItem[1]}
-                key={settingItem[0]}
-              />
-            </Grid>
-          </Grid>
-        )
-      default:
-    }
-  })
+  return (
+    <Grid container spacing={0} direction="column">
+      <Grid item xs={12}>
+        <Typography gutterBottom variant="h5">
+          {schemaSection.section_label}
+        </Typography>
+      </Grid>
+      {Object.entries(settingsSection).map((settingItem) => {
+        const setting = {
+          ...schemaSection[settingItem[0]],
+          value: settingItem[1],
+          path: `${name}.${settingItem[0]}`,
+        }
+        console.log(setting)
+        switch (setting.type) {
+          case 'boolean':
+            return (
+              <Grid item xs={12} key={setting.path}>
+                <SettingBase setting={setting} />
+              </Grid>
+            )
+          default:
+        }
+      })}
+    </Grid>
+  )
 }
 
 export default SettingsSection
