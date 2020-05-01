@@ -5,6 +5,9 @@ module SettingsUi
     def index
       @settings = SettingsUi.get_all
       @schema = SettingsUi::SCHEMA
+      @application = {
+        name: Rails.application.class.parent.name
+      }
     end
 
 

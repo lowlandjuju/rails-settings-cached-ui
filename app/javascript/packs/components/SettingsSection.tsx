@@ -2,28 +2,31 @@ import * as React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import SettingBooleanFunc from 'packs/components/SettingBoolean'
+import * as types from 'packs/types'
 
-interface sectionProps {
+interface Props {
   name: string
-  section: object
-  schema: object
+  settingsSection: types.SettingsSection
+  schemaSection: types.SchemaSection
+  key: string
 }
-
-function SettingsSection(props: sectionProps) {
-  return Object.entries(props.section).map((entry: object) => {
-    const entrySchema = props.schema[entry[0]]
-    switch (entrySchema.type) {
+const SettingsSection = ({ name, settingsSection, schemaSection }: Props) => {
+  return Object.entries(settingsSection).map((settingItem) => {
+    const settingType = schemaSection[settingItem[0]].type
+    switch (settingType) {
       case 'boolean':
         return (
-          <Grid container spacing={0} direction="column">
+          <Grid container spacing={0} direction="column" key={name}>
             <Grid item xs={12}>
-              <Typography variant="h5">{props.name.toUpperCase()}</Typography>
+              <Typography variant="h5">
+                {schemaSection.section_label}
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <SettingBooleanFunc
-                label={entrySchema.label}
-                value={entry[1]}
-                key={entry[0]}
+                label={schemaSection[settingItem[0]].label}
+                value={settingItem[1]}
+                key={settingItem[0]}
               />
             </Grid>
           </Grid>
