@@ -1,4 +1,5 @@
 require "settings_ui/engine"
+require "rudash"
 
 module SettingsUi
   ROOT_PATH = Pathname.new(File.join(__dir__, ".."))
