@@ -3,7 +3,6 @@
 // of the page.
 
 import * as React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import ReactDOM from 'react-dom'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -16,6 +15,7 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 
+import styles from 'packs/styles'
 import * as types from 'packs/types'
 
 interface Props {
@@ -25,25 +25,13 @@ interface Props {
   application: types.Application
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    background: '#444',
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}))
-
 const Dashboard: React.FC<Props> = ({
   logged_in_user,
   settings,
   schema,
   application,
 }) => {
-  const classes = useStyles()
+  const classes = styles.dashboard()
   return (
     <Container maxWidth="md" style={{ paddingTop: 30 }}>
       <Grid container spacing={2} direction="column" alignContent="center">
@@ -58,10 +46,10 @@ const Dashboard: React.FC<Props> = ({
           </Paper>
         </Grid>
         <Grid item xs={12} style={{ width: '100%' }}>
-          <Paper elevation={3}>
+          <Paper elevation={3} className={classes.root}>
             <Grid container direction="column">
               <Grid item xs={12} style={{ width: '100%' }}>
-                <AppBar position="static" className={classes.root}>
+                <AppBar position="static" className={classes.appBar}>
                   <Toolbar>
                     <IconButton
                       edge="start"

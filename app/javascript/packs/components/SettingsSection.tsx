@@ -22,9 +22,9 @@ const SettingsSection = ({ name, settingsSection, schemaSection }: Props) => {
         const setting = {
           ...schemaSection[settingItem[0]],
           value: settingItem[1],
-          path: `${name}.${settingItem[0]}`,
+          section: name,
+          path: settingItem[0],
         }
-        console.log(setting)
         switch (setting.type) {
           case 'boolean':
             return (

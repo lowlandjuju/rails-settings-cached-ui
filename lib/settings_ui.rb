@@ -15,11 +15,11 @@ module SettingsUi
 
   # Helper classes for rails-settings-cached models with nested object schemas
   ################################
-  def self.set(key, path, value)
+  def self.set(section:, path:, value:)
     klass = Object.const_get(SettingsUi::MODEL_NAME)
-    group = klass.send(key)
+    group = klass.send(section)
     R_.set(group, path, value)
-    klass.send("#{key}=", group)
+    klass.send("#{section}=", group)
   end
 
   def self.get_all
@@ -29,8 +29,8 @@ module SettingsUi
     settings
   end
 
-  def self.get_type(key, path)
-    R_.get(SettingsUi::SCHEMA, "#{key}.#{path}")
+  def self.get_type(section, path)
+    R_.get(SettingsUi::SCHEMA, "#{section}.#{path}")[:type]
   end
   ################################
 end

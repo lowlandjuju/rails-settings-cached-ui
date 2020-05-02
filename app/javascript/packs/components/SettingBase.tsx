@@ -13,6 +13,9 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import * as types from 'packs/types'
 
+import http from 'packs/http'
+import Alerter from 'packs/components/Alerter'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -59,9 +62,44 @@ const SettingBase = ({ setting }: Props) => {
   const classes = useStyles()
 
   const [newValue, setNewValue] = React.useState(setting.value)
+  const [saving, setSaving] = React.useState(false)
+  const [alert, setAlert] = React.useState({
+    alertedAt: null,
+    severity: null,
+    message: null,
+  })
 
   const handleChange = (event) => {
     setNewValue(event.target.checked)
+  }
+
+  const handleSave = () => {
+    http
+      .put('/settings_ui/settings', {
+        setting: {
+          section: setting.section,
+          path: setting.path,
+          value: newValue,
+        },
+      })
+      .then(() => {
+        setAlert({
+          alertedAt: Date.now(),
+          severity: 'success',
+          message: `[${setting.section}] ${
+            setting.path
+          } set to "${newValue.toString()}"`,
+        })
+        setSaving(true)
+        setTimeout(() => window.location.reload(), 1000)
+      })
+      .catch((err) =>
+        setAlert({
+          alertedAt: Date.now(),
+          severity: 'error',
+          message: `[${setting.section}] ${err} `,
+        })
+      )
   }
 
   const getComponent = () => {
@@ -86,6 +124,7 @@ const SettingBase = ({ setting }: Props) => {
 
   return (
     <div className={classes.root}>
+      {alert.alertedAt && <Alerter {...alert} />}
       <ExpansionPanel defaultExpanded>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
@@ -124,12 +163,12 @@ const SettingBase = ({ setting }: Props) => {
         </ExpansionPanelDetails>
 
         <Divider />
-        {newValue !== setting.value && (
+        {newValue !== setting.value && !saving && (
           <ExpansionPanelActions>
             <Button size="small" onClick={() => setNewValue(setting.value)}>
               Cancel
             </Button>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={handleSave}>
               Save
             </Button>
           </ExpansionPanelActions>

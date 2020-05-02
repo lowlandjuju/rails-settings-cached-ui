@@ -1,4 +1,6 @@
 SettingsUi::Engine.routes.draw do
-  resources :settings, only: [:index, :update]
   root to: "settings#index"
+  scope :settings do
+    put '/', to: 'settings#update'
+  end
 end
