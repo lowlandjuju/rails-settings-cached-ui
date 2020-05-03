@@ -70,15 +70,17 @@ const Dashboard: React.FC<Props> = ({
                 </AppBar>
               </Grid>
               <Grid item xs={12} style={{ width: '100%', padding: 20 }}>
-                {Object.entries(settings).map((entry: any[]) => (
-                  // @ts-ignore
-                  <SettingsSection
-                    name={entry[0]}
-                    settingsSection={entry[1]}
-                    schemaSection={schema[entry[0]]}
-                    key={entry[0]}
-                  />
-                ))}
+                <Grid container spacing={2} direction="column">
+                  {Object.entries(settings).map((entry: any[]) => (
+                    // @ts-ignore
+                    <SettingsSection
+                      name={entry[0]}
+                      settingsSection={entry[1]}
+                      schemaSection={schema[entry[0]]}
+                      key={entry[0]}
+                    />
+                  ))}
+                </Grid>
               </Grid>
             </Grid>
           </Paper>

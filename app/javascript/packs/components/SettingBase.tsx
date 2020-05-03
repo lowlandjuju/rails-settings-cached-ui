@@ -113,6 +113,7 @@ const SettingBase = ({ setting }: Props) => {
                 onChange={handleChange}
                 name={setting.path}
                 color="primary"
+                disabled={!setting.available}
               />
             }
             label={newValue.toString()}

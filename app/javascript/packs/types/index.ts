@@ -4,6 +4,7 @@ export interface Application {
 
 export interface Setting {
   [propName: string]: any
+  SchemaItem?
 }
 
 export interface SettingsSection {
@@ -23,6 +24,7 @@ export interface SchemaItem {
   label: string
   description: string | null
   link: string | null
+  available: boolean
 }
 
 export interface Schema {

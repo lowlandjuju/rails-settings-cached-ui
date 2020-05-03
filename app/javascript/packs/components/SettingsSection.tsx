@@ -12,12 +12,10 @@ interface Props {
 }
 const SettingsSection = ({ name, settingsSection, schemaSection }: Props) => {
   return (
-    <Grid container spacing={0} direction="column">
-      <Grid item xs={12}>
-        <Typography gutterBottom variant="h5">
-          {schemaSection.section_label}
-        </Typography>
-      </Grid>
+    <Grid item xs={12}>
+      <Typography gutterBottom variant="h5">
+        {schemaSection.section_label}
+      </Typography>
       {Object.entries(settingsSection).map((settingItem) => {
         const setting = {
           ...schemaSection[settingItem[0]],
@@ -25,15 +23,7 @@ const SettingsSection = ({ name, settingsSection, schemaSection }: Props) => {
           section: name,
           path: settingItem[0],
         }
-        switch (setting.type) {
-          case 'boolean':
-            return (
-              <Grid item xs={12} key={setting.path}>
-                <SettingBase setting={setting} />
-              </Grid>
-            )
-          default:
-        }
+        return <SettingBase setting={setting} key={setting.path} />
       })}
     </Grid>
   )
