@@ -32,5 +32,11 @@ module SettingsUi
   def self.get_type(section, path)
     R_.get(SettingsUi::SCHEMA, "#{section}.#{path}")[:type]
   end
+
+  def self.load_defaults
+    klass = Object.const_get(SettingsUi::MODEL_NAME)
+    klass.delete_all
+    klass.clear_cache
+  end
   ################################
 end
