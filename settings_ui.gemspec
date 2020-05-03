@@ -29,9 +29,9 @@ Gem::Specification.new do |spec|
       "public gem pushes."
   end
 
-  spec.files = Dir["{app,config,test,lib,bin}/**/*", "MIT-LICENSE", "Rakefile", "README.md", ".browserslistrc", "babel.config.js", "Gemfile*", "package.json", "postcss.config.js", "yarn.lock"]
+  spec.files = Dir["{app,config,test,lib,bin}/**/*", "MIT-LICENSE", ".generators", "Rakefile", "README.md", ".browserslistrc", "babel.config.js", "Gemfile*", "package.json", "postcss.config.js", "yarn.lock"]
 
-  spec.add_dependency "rails", "~> 5.2.4", ">= 5.2.4.1"
+  spec.add_dependency "rails", "~> 5.2.4.2"
   spec.add_dependency "webpacker", "~> 5"
   spec.add_dependency "rudash", "~> 4.1"
 
