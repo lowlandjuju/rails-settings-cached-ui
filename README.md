@@ -1,6 +1,9 @@
 # SettingsUI
 This gem is a work in progress, but aims to be a generic UI for modifying settings for Rails applications on the fly, using rails-settings-cached.
 
+## Requirements
+The parent Rails app needs to have a working installation of `rails/webpacker`.
+
 ## Installation
 Add this line to your application's Gemfile:
 
@@ -28,13 +31,6 @@ mount SettingsUi::Engine, at: '/settings_ui', constraints: lambda { |request|
 ```
 Or whatever route you want to mount the UI at. Where `CONSTRAINT_METHOD` is whatever you want to use to restrict access to the settings UI.
 
-## Development
-
-And this to your `Procfile.dev` (or whatever you use for running processes in development):
-
-```yaml
-settings_ui_webpack_dev_server: bundle exec webpack-dev-server
-```
 
 ## Contributing
 TODO: Contribution directions go here.
