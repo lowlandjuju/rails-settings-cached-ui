@@ -35,6 +35,11 @@ namespace :settings_ui do
         end
       end
     end
+
+    desc "Run webpack dev server"
+    task :dev_server do
+      system "bundle exec webpack-dev-server"
+    end
   end
 end
 

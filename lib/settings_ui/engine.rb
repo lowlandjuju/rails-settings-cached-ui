@@ -19,7 +19,7 @@ module SettingsUi
 
     config.app_middleware.use(
         Rack::Static,
-        urls: ["/settings-ui-packs"], root: "gems/settings_ui/public"
+        urls: ["/settings-ui-packs"], root: "settings_ui/public"
     )
   end
 end
