@@ -36,8 +36,9 @@ module SettingsUi
 
   def self.load_defaults
     klass = Object.const_get(SettingsUi::MODEL_NAME)
-    klass.delete_all
+    klass.clear_cache!
     klass.clear_cache
+    klass.delete_all unless klass.count == 0
   end
 
   def self.load_default_setting(section, setting)
@@ -49,7 +50,9 @@ module SettingsUi
     current_section.delete(setting)
 
     # Delete section from settings database table
-    klass.delete(klass.where(var: section)[0].try(:id))
+    section_id = klass.where(var: section)[0].try(:id)
+    return if section_id.nil?
+    klass.delete(section_id)
 
     # Add default setting back into hash of current settings section
     klass.clear_cache

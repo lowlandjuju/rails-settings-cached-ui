@@ -102,6 +102,28 @@ const SettingBase = ({ setting }: Props) => {
       )
   }
 
+  const reset = () => {
+    setSaving(true)
+    let newAlert = { alertedAt: Date.now(), severity: 'success', message: null }
+    http
+      .post('/settings_ui/settings/default', {
+        scope: 'single',
+        section: setting.section,
+        path: setting.path,
+      })
+      .then(() => {
+        newAlert = { ...newAlert, message: 'Settings returned to default' }
+        setTimeout(() => window.location.reload(), 1500)
+      })
+      .catch((err) => {
+        newAlert = { ...newAlert, severity: 'error', message: err.toString() }
+      })
+      .then(() => {
+        setAlert(newAlert)
+        setSaving(false)
+      })
+  }
+
   const getComponent = () => {
     switch (setting.type) {
       case 'boolean':
@@ -160,6 +182,16 @@ const SettingBase = ({ setting }: Props) => {
                 </a>
               )}
             </Typography>
+          </div>
+          <div>
+            <Button
+              color="default"
+              size="small"
+              variant="outlined"
+              onClick={reset}
+            >
+              Reset
+            </Button>
           </div>
         </ExpansionPanelDetails>
 

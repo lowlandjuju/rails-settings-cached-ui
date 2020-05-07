@@ -73,6 +73,8 @@ const Dashboard: React.FC<Props> = ({
       })
   }
 
+  console.log(application)
+
   return (
     <Container maxWidth="md" style={{ paddingTop: 30 }}>
       <Grid container spacing={2} direction="column" alignContent="center">
