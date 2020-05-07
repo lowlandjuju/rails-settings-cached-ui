@@ -26,14 +26,28 @@ module SettingsUi
       end
     end
 
-    def reset_defaults
-
+    def default
+      # Return settings to defaults. Either single setting, or all settings.
+      begin
+        if setting_params[:scope] == 'all'
+          SettingsUi.load_defaults
+        elsif setting_params[:scope] == 'single'
+          SettingsUi.load_default_setting(setting_params[:section], setting_params[:path])
+        end
+        render json: {
+            message: 'success'
+        }, status: 200
+      rescue StandardError => e
+        render json: {
+            error: e.inspect
+        }, status: 500
+      end
     end
 
     private
 
     def setting_params
-      params.require(:setting).permit(:section, :path, :value)
+      params.require(:setting).permit(:section, :path, :value, :scope)
     end
   end
 end

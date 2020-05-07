@@ -56,9 +56,10 @@ const Dashboard: React.FC<Props> = ({
 
   const resetAll = () => {
     setSaving(true)
+    handleClose()
     let newAlert = { alertedAt: Date.now(), severity: 'success', message: null }
     http
-      .post('/settings_ui/settings/default', {})
+      .post('/settings_ui/settings/default', { scope: 'all' })
       .then(() => {
         newAlert = { ...newAlert, message: 'All settings returned to default' }
         setTimeout(() => window.location.reload(), 1500)
@@ -68,7 +69,6 @@ const Dashboard: React.FC<Props> = ({
       })
       .then(() => {
         setAlert(newAlert)
-        handleClose()
         setSaving(false)
       })
   }

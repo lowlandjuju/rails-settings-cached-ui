@@ -3,6 +3,7 @@ require "rudash"
 
 module SettingsUi
   ROOT_PATH = Pathname.new(File.join(__dir__, ".."))
+  Hash.use_dot_syntax = true
 
   class << self
     def webpacker
@@ -37,6 +38,23 @@ module SettingsUi
     klass = Object.const_get(SettingsUi::MODEL_NAME)
     klass.delete_all
     klass.clear_cache
+  end
+
+  def self.load_default_setting(section, setting)
+    klass = Object.const_get(SettingsUi::MODEL_NAME)
+
+    # Remove setting from section hash
+    current_section = klass.send(section).dup
+    raise StandardError.new "Setting does not exist within section" unless current_section.has_key?(setting)
+    current_section.delete(setting)
+
+    # Delete section from settings database table
+    klass.delete(klass.where(var: section)[0].try(:id))
+
+    # Add default setting back into hash of current settings section
+    klass.clear_cache
+    current_section[setting] = klass.send(section)[setting]
+    klass.send("#{section}=", current_section)
   end
   ################################
 end
