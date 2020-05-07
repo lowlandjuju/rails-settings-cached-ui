@@ -14,6 +14,14 @@ const dashboard = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  menuItem: {
+    fontWeight: 'bold',
+    margin: '5px 0',
+  },
+  menuItemClose: {
+    color: '#949494',
+    margin: '5px 0',
+  },
 }))
 
 export default {
