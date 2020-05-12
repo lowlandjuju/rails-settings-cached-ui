@@ -36,9 +36,14 @@ module SettingsUi
 
   def self.load_defaults
     klass = Object.const_get(SettingsUi::MODEL_NAME)
-    klass.clear_cache!
-    klass.clear_cache
-    klass.delete_all unless klass.count == 0
+
+    # Reload section by section
+    SettingsUi::SCHEMA.keys.each do |key|
+      section_id = klass.where(var: key)[0].try(:id)
+      klass.delete(section_id) unless section_id.nil?
+      klass.clear_cache
+      klass.send("#{key}=", klass.send(key))
+    end
   end
 
   def self.load_default_setting(section, setting)
